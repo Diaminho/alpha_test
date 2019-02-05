@@ -1,7 +1,8 @@
 package com.example.alpha_test.shop.controllers;
 
-import com.example.alpha_test.shop.ProductType;
+import com.example.alpha_test.shop.beans.Type;
 import com.example.alpha_test.shop.repositories.ProductTypeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 @RestController
 class ProductTypeController {
 
+    @Autowired
     private ProductTypeRepository repository;
 
     ProductTypeController(ProductTypeRepository repository) {
@@ -19,25 +21,25 @@ class ProductTypeController {
     // Aggregate root
 
     @GetMapping("/productTypes")
-    List<ProductType> all() {
+    List<Type> all() {
         return repository.findAll();
     }
 
     @PostMapping("/productTypes")
-    ProductType newProductType(@RequestBody ProductType newProductType) {
+    Type newProductType(@RequestBody Type newProductType) {
         return repository.save(newProductType);
     }
 
     // Single item
 
     @GetMapping("/productTypes/{id}")
-    Optional<ProductType> one(@PathVariable Long id) {
+    Optional<Type> one(@PathVariable Long id) {
 
         return repository.findById(id);
     }
 
-    @PutMapping("/productTypes/{id}")
-    ProductType replaceProductType(@RequestBody ProductType newProductType, @PathVariable int id) {
+   /* @PutMapping("/productTypes/{id}")
+    Type replaceProductType(@RequestBody Type newProductType, @PathVariable int id) {
 
         return repository.findById((long) id)
                 .map(productType -> {
@@ -50,7 +52,7 @@ class ProductTypeController {
                     return repository.save(newProductType);
                 });
     }
-
+*/
     @DeleteMapping("/productTypes/{id}")
     void deleteProductType(@PathVariable Long id) {
         repository.deleteById(id);
