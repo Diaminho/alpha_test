@@ -1,15 +1,11 @@
 package com.example.alpha_test.shop.beans;
 
-
-
-
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="type")
-public class Type {
-
+@Table(name="brand")
+public class BrandName {
     @Id
     @GeneratedValue
     @Column(name="id")
@@ -17,16 +13,8 @@ public class Type {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "productTypeId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brandNameId", cascade = CascadeType.ALL)
     private Set<Product> products;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
@@ -36,10 +24,26 @@ public class Type {
         this.id = id;
     }
 
-    public Type(String name, Set<Product> products) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    public BrandName(String name, Set<Product> products) {
         this.name = name;
         this.products = products;
     }
 
-    public Type(){}
+    public BrandName(){}
 }

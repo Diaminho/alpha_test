@@ -1,7 +1,7 @@
 package com.example.alpha_test.shop.controllers;
 
 import com.example.alpha_test.shop.beans.Type;
-import com.example.alpha_test.shop.repositories.ProductTypeRepository;
+import com.example.alpha_test.shop.repositories.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.Optional;
 class ProductTypeController {
 
     @Autowired
-    private ProductTypeRepository repository;
+    private TypeRepository repository;
 
-    ProductTypeController(ProductTypeRepository repository) {
+    ProductTypeController(TypeRepository repository) {
         this.repository = repository;
     }
 
