@@ -1,4 +1,4 @@
-package com.example.alpha_test.shop.beans;
+package com.example.alpha_test.beans;
 
 import javax.persistence.*;
 

@@ -1,4 +1,6 @@
-package com.example.alpha_test.shop.beans;
+package com.example.alpha_test.beans;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +11,7 @@ import java.util.Set;
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
     @Column(name="model")
@@ -21,6 +23,7 @@ public class Product {
 
     @ManyToOne(targetEntity = BrandName.class)
     @JoinColumn(name="brand_id")
+    @JsonIgnoreProperties("products")
     private BrandName brandNameId;
 
     @Column(name="quantity")
@@ -29,7 +32,8 @@ public class Product {
     @Column(name="price")
     private double price;
 
-    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("productId")
     private Set<ProductToProperty> productToProperties;
 
     public Long getId() {
@@ -87,4 +91,23 @@ public class Product {
     public void setProductToProperties(Set<ProductToProperty> productToProperties) {
         this.productToProperties = productToProperties;
     }
+
+    public Product(Long id, String model, Type productTypeId, BrandName brandNameId, Long quantity, double price) {
+        this.model = model;
+        this.productTypeId = productTypeId;
+        this.brandNameId = brandNameId;
+        this.quantity = quantity;
+        this.price = price;
+        this.id=id;
+    }
+
+    public Long getTypeId(){
+        return productTypeId.getId();
+    }
+
+    public Long getBrandId(){
+        return brandNameId.getId();
+    }
+
+    public Product() {}
 }

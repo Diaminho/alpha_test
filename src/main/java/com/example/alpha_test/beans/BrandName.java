@@ -1,4 +1,6 @@
-package com.example.alpha_test.shop.beans;
+package com.example.alpha_test.beans;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +16,7 @@ public class BrandName {
     private String name;
 
     @OneToMany(mappedBy = "brandNameId", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("brandNameId")
     private Set<Product> products;
 
     public Long getId() {
@@ -40,10 +43,11 @@ public class BrandName {
         this.products = products;
     }
 
-    public BrandName(String name, Set<Product> products) {
+    public BrandName(Long id, String name) {
         this.name = name;
-        this.products = products;
+        this.id=id;
     }
 
     public BrandName(){}
+
 }

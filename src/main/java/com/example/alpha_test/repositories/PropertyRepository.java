@@ -1,6 +1,6 @@
-package com.example.alpha_test.shop.repositories;
+package com.example.alpha_test.repositories;
 
-import com.example.alpha_test.shop.beans.Property;
+import com.example.alpha_test.beans.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

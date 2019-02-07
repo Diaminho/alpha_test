@@ -1,4 +1,4 @@
-package com.example.alpha_test.shop.beans;
+package com.example.alpha_test.beans;
 
 
 
@@ -11,7 +11,7 @@ import java.util.Set;
 public class Type {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
     @Column(name="name")
