@@ -36,7 +36,7 @@ import java.util.Optional;
     }
 
     @PutMapping("/products")
-    ResponseEntity<?> addProduct(//@RequestParam Long id,
+    ResponseEntity<?> addProduct(@RequestParam Long id,
                                  @RequestParam String model,
                                  @RequestParam Long brandId,
                                  @RequestParam Long typeId,
@@ -48,12 +48,19 @@ import java.util.Optional;
 
         Product product=new Product();
         product.setBrandNameId(brand);
-        //product.setId(id);
+        product.setId(id);
         product.setModel(model);
         product.setPrice(price);
         product.setQuantity(quantity);
         product.setProductTypeId(type);
 
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/products/{id}")
+    ResponseEntity<Void> delete(@PathVariable Long id) {
+        productRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

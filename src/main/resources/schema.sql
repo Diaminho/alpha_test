@@ -17,7 +17,7 @@ CREATE TABLE Property (
 
 
 CREATE Table Product(
-  id          INTEGER PRIMARY KEY,
+  id          INTEGER PRIMARY KEY auto_increment,
   model       VARCHAR(128) Not Null,
   type_id     INTEGER REFERENCES Type(id),
   brand_id    INTEGER REFERENCES Brand(id),
