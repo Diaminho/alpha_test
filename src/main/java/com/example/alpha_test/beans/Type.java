@@ -1,9 +1,9 @@
 package com.example.alpha_test.beans;
 
-
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +17,9 @@ public class Type {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "productTypeId", cascade = CascadeType.ALL)
-    private Set<Product> products;
+    @OneToMany(mappedBy = "productTypeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Product> products=new HashSet<>();
 
     public String getName() {
         return name;
@@ -42,4 +43,5 @@ public class Type {
     }
 
     public Type(){}
+
 }

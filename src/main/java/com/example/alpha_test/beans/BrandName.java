@@ -1,8 +1,11 @@
 package com.example.alpha_test.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,8 +19,8 @@ public class BrandName {
     private String name;
 
     @OneToMany(mappedBy = "brandNameId", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("brandNameId")
-    private Set<Product> products;
+    @JsonManagedReference
+    private Set<Product> products=new HashSet<>();
 
     public Long getId() {
         return id;
@@ -50,4 +53,11 @@ public class BrandName {
 
     public BrandName(){}
 
+    @Override
+    public String toString() {
+        return "BrandName{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

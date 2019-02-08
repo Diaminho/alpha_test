@@ -1,5 +1,7 @@
 package com.example.alpha_test.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,9 +14,12 @@ public class ProductToProperty {
 
     @ManyToOne(targetEntity = Product.class)
     @JoinColumn(name="product_id")
+    @JsonBackReference
+    //@JsonIgnoreProperties("productTo")
     private Product productId;
     @ManyToOne(targetEntity = Property.class)
     @JoinColumn(name="property_id")
+    @JsonBackReference
     private Property propertyId;
     @Column(name="value")
     private String propertyValue;

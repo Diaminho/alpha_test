@@ -1,8 +1,9 @@
 package com.example.alpha_test.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
     @Column(name="model")
@@ -19,10 +20,13 @@ public class Product {
 
     @ManyToOne(targetEntity = Type.class)
     @JoinColumn(name="type_id")
+    //@JsonBackReference
+    @JsonIgnoreProperties("products")
     private Type productTypeId;
 
     @ManyToOne(targetEntity = BrandName.class)
     @JoinColumn(name="brand_id")
+    //@JsonBackReference
     @JsonIgnoreProperties("products")
     private BrandName brandNameId;
 
@@ -33,8 +37,8 @@ public class Product {
     private double price;
 
     @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("productId")
-    private Set<ProductToProperty> productToProperties;
+    @JsonManagedReference
+    private Set<ProductToProperty> productToProperties=new HashSet<>();
 
     public Long getId() {
         return id;
@@ -64,6 +68,7 @@ public class Product {
         return brandNameId;
     }
 
+
     public void setBrandNameId(BrandName brandNameId) {
         this.brandNameId = brandNameId;
     }
@@ -88,6 +93,7 @@ public class Product {
         return productToProperties;
     }
 
+
     public void setProductToProperties(Set<ProductToProperty> productToProperties) {
         this.productToProperties = productToProperties;
     }
@@ -101,13 +107,12 @@ public class Product {
         this.id=id;
     }
 
-    public Long getTypeId(){
-        return productTypeId.getId();
-    }
 
-    public Long getBrandId(){
-        return brandNameId.getId();
-    }
+    /*public Set<ProductToProperty> getProductToProperties() {
+        return productToProperties.;
+    }*/
 
     public Product() {}
+
+
 }

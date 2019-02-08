@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
  class ProductController {
@@ -29,10 +28,9 @@ import java.util.Optional;
 
     }
 
-    @GetMapping("/products/{id}")
-    ResponseEntity<Optional> all(@PathVariable Long id) {
-        Optional<Product> product=productRepository.findById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    @GetMapping("/products")
+    ResponseEntity<List> all() {
+        return new ResponseEntity<List>(productRepository.findAll(), HttpStatus.OK);
     }
 
     @PutMapping("/products")
@@ -42,19 +40,39 @@ import java.util.Optional;
                                  @RequestParam Long typeId,
                                  @RequestParam Long quantity,
                                  @RequestParam double price
-                                 ) {
-        BrandName brand=brandRepository.getOne(brandId);
-        Type type=typeRepository.getOne(typeId);
+    ) {
+        BrandName brand=brandRepository.findById(brandId).orElse(null);
+        Type type=typeRepository.findById(typeId).orElse(null);
 
-        Product product=new Product();
-        product.setBrandNameId(brand);
-        product.setId(id);
-        product.setModel(model);
-        product.setPrice(price);
-        product.setQuantity(quantity);
-        product.setProductTypeId(type);
+        if (brand!=null && type!=null) {
 
-        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            Product product = new Product();
+            product.setBrandNameId(brand);
+            product.setId(id);
+            product.setModel(model);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setProductTypeId(type);
+
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @GetMapping("/products/{id}")
+    ResponseEntity<Product> one(@PathVariable Long id) {
+        Product product=productRepository.findById(id).orElse(null);
+        if (product!=null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -62,5 +80,56 @@ import java.util.Optional;
     ResponseEntity<Void> delete(@PathVariable Long id) {
         productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/products/{id}/price")
+    ResponseEntity<?> editPrice(@PathVariable Long id, @RequestParam double newPrice){
+        Product product=productRepository.findById(id).orElse(null);
+        if (product!=null) {
+            product.setPrice(newPrice);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/products/{id}/quantity")
+    ResponseEntity<?> editQuantity(@PathVariable Long id, @RequestParam Long newQuantity){
+        Product product=productRepository.findById(id).orElse(null);
+        if (product!=null) {
+            product.setQuantity(newQuantity);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/products/{id}/BrandName")
+    ResponseEntity<?> editBrandNameId(@PathVariable Long id, @RequestParam Long newBrandNameId){
+        Product product=productRepository.findById(id).orElse(null);
+        BrandName brand=brandRepository.findById(newBrandNameId).orElse(null);
+        if (product!=null && brand!=null) {
+            product.setBrandNameId(brand);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/products/{id}/type")
+    ResponseEntity<?> editTypeId(@PathVariable Long id, @RequestParam Long newTypeId){
+        Product product=productRepository.findById(id).orElse(null);
+        Type type=typeRepository.findById(newTypeId).orElse(null);
+        if (product!=null && type!=null) {
+            product.setProductTypeId(type);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
     }
 }
