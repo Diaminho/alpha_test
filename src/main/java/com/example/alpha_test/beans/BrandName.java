@@ -18,8 +18,9 @@ public class BrandName {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "brandNameId", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "brandName", cascade = CascadeType.ALL)
+    //@JsonManagedReference
+    @JsonIgnore
     private Set<Product> products=new HashSet<>();
 
     public Long getId() {
@@ -53,11 +54,4 @@ public class BrandName {
 
     public BrandName(){}
 
-    @Override
-    public String toString() {
-        return "BrandName{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

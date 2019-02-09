@@ -22,13 +22,13 @@ public class Product {
     @JoinColumn(name="type_id")
     //@JsonBackReference
     @JsonIgnoreProperties("products")
-    private Type productTypeId;
+    private Type productType;
 
     @ManyToOne(targetEntity = BrandName.class)
     @JoinColumn(name="brand_id")
     //@JsonBackReference
     @JsonIgnoreProperties("products")
-    private BrandName brandNameId;
+    private BrandName brandName;
 
     @Column(name="quantity")
     private Long quantity;
@@ -36,7 +36,7 @@ public class Product {
     @Column(name="price")
     private double price;
 
-    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 
@@ -56,21 +56,21 @@ public class Product {
         this.model = model;
     }
 
-    public Type getProductTypeId() {
-        return productTypeId;
+    public Type getProductType() {
+        return productType;
     }
 
-    public void setProductTypeId(Type productTypeId) {
-        this.productTypeId = productTypeId;
+    public void setProductType(Type productType) {
+        this.productType = productType;
     }
 
-    public BrandName getBrandNameId() {
-        return brandNameId;
+    public BrandName getBrandName() {
+        return brandName;
     }
 
 
-    public void setBrandNameId(BrandName brandNameId) {
-        this.brandNameId = brandNameId;
+    public void setBrandName(BrandName brandName) {
+        this.brandName = brandName;
     }
 
     public Long getQuantity() {
@@ -98,10 +98,10 @@ public class Product {
         this.productToProperties = productToProperties;
     }
 
-    public Product(Long id, String model, Type productTypeId, BrandName brandNameId, Long quantity, double price) {
+    public Product(Long id, String model, Type productType, BrandName brandName, Long quantity, double price) {
         this.model = model;
-        this.productTypeId = productTypeId;
-        this.brandNameId = brandNameId;
+        this.productType = productType;
+        this.brandName = brandName;
         this.quantity = quantity;
         this.price = price;
         this.id=id;

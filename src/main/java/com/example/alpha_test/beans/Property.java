@@ -14,12 +14,14 @@ public class Property {
     @GeneratedValue
     @Column(name="id")
     private Long id;
+
     @Column(name="type_id")
     private Long type_id;
+
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "propertyId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 
