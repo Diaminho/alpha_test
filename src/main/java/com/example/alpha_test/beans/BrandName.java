@@ -18,7 +18,7 @@ public class BrandName {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "brandName", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brandName", cascade = CascadeType.REMOVE)
     //@JsonManagedReference
     @JsonIgnore
     private Set<Product> products=new HashSet<>();

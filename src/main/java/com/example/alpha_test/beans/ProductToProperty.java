@@ -22,6 +22,7 @@ public class ProductToProperty {
     @JoinColumn(name="property_id")
     @JsonIgnoreProperties({"productToProperties","type_id"})
     private Property property;
+
     @Column(name="value")
     private String propertyValue;
 

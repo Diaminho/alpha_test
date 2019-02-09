@@ -36,7 +36,7 @@ public class Product {
     @Column(name="price")
     private double price;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 

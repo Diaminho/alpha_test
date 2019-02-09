@@ -18,7 +18,7 @@ public class Type {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productType", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Product> products=new HashSet<>();
 

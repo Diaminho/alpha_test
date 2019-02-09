@@ -21,7 +21,7 @@ public class Property {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 

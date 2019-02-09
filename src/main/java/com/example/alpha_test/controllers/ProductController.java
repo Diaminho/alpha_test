@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
- class ProductController {
+public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
@@ -76,8 +76,10 @@ import java.util.List;
     ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
         if (productRepository.findById(id).orElse(null)!=null) {
             productRepository.deleteById(id);
+            return ResponseEntity.ok().build();
         }
-            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/products/{id}/price")
