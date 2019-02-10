@@ -22,7 +22,7 @@ public class Property {
     private String name;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 
     public Long getId() {
@@ -53,7 +53,6 @@ public class Property {
         return productToProperties;
     }
 
-    @JsonProperty
     public void setProductToProperties(Set<ProductToProperty> productToProperties) {
         this.productToProperties = productToProperties;
     }

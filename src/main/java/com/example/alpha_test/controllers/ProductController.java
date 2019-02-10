@@ -166,4 +166,7 @@ public class ProductController {
     ResponseEntity<List> getTypes(){
         return new ResponseEntity<>(typeRepository.findAll(),HttpStatus.OK);
     }
+
+    @GetMapping("properties")
+    ResponseEntity<List> getProperties(){ return new ResponseEntity<>(propertyRepository.findAll(),HttpStatus.OK); }
 }
