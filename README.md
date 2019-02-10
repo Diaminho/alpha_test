@@ -42,4 +42,4 @@ http://localhost:8080/products/1/price?newPrice=22.2 <br>
 a) To change property value: <br>
 http://localhost:8080/products/{id}/productToProperties/{prodToProp_id}?value={value} <br> <br>
 b) To create new property and property value and replace current productToProperty: <br>
-http:/localhost:8080/products/{id}/productToProperties/{prodToProp_id}?value={value}&newPropertyId={newPropertyId}&newPropertyName={newPropertyName}
+http://localhost:8080/products/{id}/productToProperties/{prodToProp_id}?value={value}&newPropertyId={newPropertyId}&newPropertyName={newPropertyName}
