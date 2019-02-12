@@ -1,6 +1,6 @@
 package com.example.alpha_test;
 
-import com.example.alpha_test.beans.*;
+import com.example.alpha_test.entities.*;
 import com.example.alpha_test.controllers.ProductController;
 import com.example.alpha_test.repositories.*;
 import org.junit.Test;

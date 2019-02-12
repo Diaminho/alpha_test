@@ -1,9 +1,14 @@
 package com.example.alpha_test.repositories;
 
 
-import com.example.alpha_test.beans.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.alpha_test.entities.Product;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {}
+public interface ProductRepository extends CrudRepository<Product, Long> {
+    List<Product> findAll();
+    Product getById(Long id);
+}

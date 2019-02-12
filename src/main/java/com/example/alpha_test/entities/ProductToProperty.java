@@ -1,4 +1,4 @@
-package com.example.alpha_test.beans;
+package com.example.alpha_test.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,6 +25,8 @@ public class ProductToProperty {
 
     @Column(name="value")
     private String propertyValue;
+
+    public ProductToProperty() { }
 
     public Product getProduct() {
         return product;

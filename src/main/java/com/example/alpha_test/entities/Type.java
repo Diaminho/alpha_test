@@ -1,4 +1,4 @@
-package com.example.alpha_test.beans;
+package com.example.alpha_test.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +18,7 @@ public class Type {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "productType", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Product> products=new HashSet<>();
 

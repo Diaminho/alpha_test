@@ -1,4 +1,4 @@
-package com.example.alpha_test.beans;
+package com.example.alpha_test.entities;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -21,9 +21,11 @@ public class Property {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ProductToProperty> productToProperties=new HashSet<>();
+
+    public Property() { }
 
     public Long getId() {
         return id;

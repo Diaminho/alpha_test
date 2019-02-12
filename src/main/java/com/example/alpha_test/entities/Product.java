@@ -1,4 +1,4 @@
-package com.example.alpha_test.beans;
+package com.example.alpha_test.entities;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -12,7 +12,6 @@ import java.util.Set;
 public class Product {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
     @Column(name="model")
@@ -20,13 +19,11 @@ public class Product {
 
     @ManyToOne(targetEntity = Type.class)
     @JoinColumn(name="type_id")
-    //@JsonBackReference
     @JsonIgnoreProperties("products")
     private Type productType;
 
     @ManyToOne(targetEntity = BrandName.class)
     @JoinColumn(name="brand_id")
-    //@JsonBackReference
     @JsonIgnoreProperties("products")
     private BrandName brandName;
 
@@ -36,7 +33,7 @@ public class Product {
     @Column(name="price")
     private double price;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 
@@ -107,10 +104,6 @@ public class Product {
         this.id=id;
     }
 
-
-    /*public Set<ProductToProperty> getProductToProperties() {
-        return productToProperties.;
-    }*/
 
     public Product() {}
 

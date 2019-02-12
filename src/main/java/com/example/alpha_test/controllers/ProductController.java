@@ -1,7 +1,8 @@
 package com.example.alpha_test.controllers;
 
-import com.example.alpha_test.beans.*;
+import com.example.alpha_test.entities.*;
 import com.example.alpha_test.repositories.*;
+import com.example.alpha_test.services.implementations.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,26 +12,18 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    @Autowired
-    private ProductRepository productRepository;
 
+    //Service
     @Autowired
-    private TypeRepository typeRepository;
+    private ProductServiceImpl productServiceImpl;
 
-    @Autowired
-    private BrandNameRepository brandRepository;
+    //default constructor
+    ProductController() { }
 
-    @Autowired
-    private PropertyRepository propertyRepository;
-
-    @Autowired
-    private ProductToPropertyRepository productToPropertyRepository;
-
-    ProductController() {}
 
     @GetMapping("/products")
-    ResponseEntity<List> getAllProducts() {
-        return new ResponseEntity<List>(productRepository.findAll(), HttpStatus.OK);
+    ResponseEntity<List<Product>> getAllProducts() {
+        return productServiceImpl.findAll();
     }
 
     @PutMapping("/products")
@@ -39,100 +32,43 @@ public class ProductController {
                                          @RequestParam Long brandId,
                                          @RequestParam Long typeId,
                                          @RequestParam Long quantity,
-                                         @RequestParam double price)
+                                         @RequestParam Double price)
     {
-        BrandName brand=brandRepository.findById(brandId).orElse(null);
-        Type type=typeRepository.findById(typeId).orElse(null);
-
-        if (brand!=null && type!=null) {
-            Product product = new Product();
-            product.setBrandName(brand);
-            product.setId(id);
-            product.setModel(model);
-            product.setPrice(price);
-            product.setQuantity(quantity);
-            product.setProductType(type);
-
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return productServiceImpl.addOrChangeProduct(id, model, brandId, typeId, quantity, price);
     }
 
     @GetMapping("/products/{id}")
     ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product=productRepository.findById(id).orElse(null);
-        if (product!=null) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
-        }
+        return productServiceImpl.getProductById(id);
     }
 
     @DeleteMapping("/products/{id}")
     ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
-        if (productRepository.findById(id).orElse(null)!=null) {
-            productRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        }
-        else
-            return ResponseEntity.notFound().build();
+       return productServiceImpl.deleteProductById(id);
     }
 
     @PutMapping("/products/{id}/price")
-    ResponseEntity<?> editPrice(@PathVariable Long id, @RequestParam double newPrice){
-        Product product=productRepository.findById(id).orElse(null);
-        if (product!=null) {
-            product.setPrice(newPrice);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<Product> editPrice(@PathVariable Long id, @RequestParam Double newPrice){
+        return productServiceImpl.editPrice(id, newPrice);
     }
 
     @PutMapping("/products/{id}/quantity")
-    ResponseEntity<?> editQuantity(@PathVariable Long id, @RequestParam Long newQuantity){
-        Product product=productRepository.findById(id).orElse(null);
-        if (product!=null) {
-            product.setQuantity(newQuantity);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<Product> editQuantity(@PathVariable Long id, @RequestParam Long newQuantity){
+        return productServiceImpl.editQuantity(id,newQuantity);
     }
 
     @PutMapping("/products/{id}/BrandName")
-    ResponseEntity<?> editBrandNameId(@PathVariable Long id, @RequestParam Long newBrandNameId){
-        Product product=productRepository.findById(id).orElse(null);
-        BrandName brand=brandRepository.findById(newBrandNameId).orElse(null);
-        if (product!=null && brand!=null) {
-            product.setBrandName(brand);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<Product> editBrandNameId(@PathVariable Long id, @RequestParam Long newBrandNameId){
+        return productServiceImpl.editBrandNameId(id, newBrandNameId);
     }
 
     @PutMapping("/products/{id}/type")
-    ResponseEntity<?> editTypeId(@PathVariable Long id, @RequestParam Long newTypeId){
-        Product product=productRepository.findById(id).orElse(null);
-        Type type=typeRepository.findById(newTypeId).orElse(null);
-        if (product!=null && type!=null) {
-            product.setProductType(type);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<Product> editTypeId(@PathVariable Long id, @RequestParam Long newTypeId){
+        return productServiceImpl.editTypeId(id, newTypeId);
     }
 
-    @PutMapping("products/{id}/productToProperties/{prodToProp_id}")
+    //need to change
+    /*@PutMapping("products/{id}/productToProperties/{prodToProp_id}")
     ResponseEntity<?> changeProductToPropertyValue(@PathVariable Long id,@PathVariable Long prodToProp_id, @RequestParam String value, @RequestParam(required = false) Long newPropertyId, @RequestParam(required = false) String newPropertyName){
         Product product=productRepository.findById(id).orElse(null);
         ProductToProperty productToProperty=productToPropertyRepository.findById(prodToProp_id).orElse(null);
@@ -155,18 +91,21 @@ public class ProductController {
         else {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
+    //
 
+    /*
     @GetMapping("brandNames")
     ResponseEntity<List> getBrands(){
         return new ResponseEntity<>(brandRepository.findAll(),HttpStatus.OK);
     }
 
     @GetMapping("types")
-    ResponseEntity<List> getTypes(){
-        return new ResponseEntity<>(typeRepository.findAll(),HttpStatus.OK);
+    ResponseEntity<List<Type>> getTypes(){
+        return typeServiceImpl.findAll();
     }
 
     @GetMapping("properties")
     ResponseEntity<List> getProperties(){ return new ResponseEntity<>(propertyRepository.findAll(),HttpStatus.OK); }
+    */
 }
