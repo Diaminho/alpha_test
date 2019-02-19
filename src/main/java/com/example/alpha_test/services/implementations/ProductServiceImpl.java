@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
-    //changing product from productRepository
+    //changing or adding product
     public ResponseEntity<Product> putProduct(Long id,
                                          String model,
                                          Long brandId,
