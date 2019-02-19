@@ -89,20 +89,4 @@ public class ProductController {
     ResponseEntity<Product> editPropertyIdAndValue(@PathVariable Long id, @PathVariable Long productToPropertyId, @PathVariable Long propertyId, @RequestParam String value){
         return productServiceImpl.editPropertyIdAndValue(id,productToPropertyId, propertyId,value);
     }
-    //
-
-    /*
-    @GetMapping("brandNames")
-    ResponseEntity<List> getBrands(){
-        return new ResponseEntity<>(brandRepository.findAll(),HttpStatus.OK);
-    }
-
-    @GetMapping("types")
-    ResponseEntity<List<Type>> getTypes(){
-        return typeServiceImpl.findAll();
-    }
-
-    @GetMapping("properties")
-    ResponseEntity<List> getProperties(){ return new ResponseEntity<>(propertyRepository.findAll(),HttpStatus.OK); }
-    */
 }
