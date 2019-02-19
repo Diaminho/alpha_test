@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ProductToPropertyRepository extends CrudRepository<ProductToProperty, Long> {
-    List findAll();
+    List<ProductToProperty> findAll();
+    ProductToProperty getById(Long id);
 }

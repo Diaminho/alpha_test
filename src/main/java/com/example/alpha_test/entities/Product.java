@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -37,6 +38,18 @@ public class Product {
     @JsonManagedReference
     private Set<ProductToProperty> productToProperties=new HashSet<>();
 
+    //default constructor
+    public Product() {}
+
+    public Product(Long id, String model, Type productType, BrandName brandName, Long quantity, double price) {
+        this.model = model;
+        this.productType = productType;
+        this.brandName = brandName;
+        this.quantity = quantity;
+        this.price = price;
+        this.id=id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -65,7 +78,6 @@ public class Product {
         return brandName;
     }
 
-
     public void setBrandName(BrandName brandName) {
         this.brandName = brandName;
     }
@@ -90,22 +102,22 @@ public class Product {
         return productToProperties;
     }
 
-
     public void setProductToProperties(Set<ProductToProperty> productToProperties) {
         this.productToProperties = productToProperties;
     }
 
-    public Product(Long id, String model, Type productType, BrandName brandName, Long quantity, double price) {
-        this.model = model;
-        this.productType = productType;
-        this.brandName = brandName;
-        this.quantity = quantity;
-        this.price = price;
-        this.id=id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Double.compare(product.price, price) == 0 &&
+                Objects.equals(id, product.id) &&
+                Objects.equals(model, product.model) &&
+                Objects.equals(productType, product.productType) &&
+                Objects.equals(brandName, product.brandName) &&
+                Objects.equals(quantity, product.quantity) &&
+                Objects.equals(productToProperties, product.productToProperties);
     }
-
-
-    public Product() {}
-
 
 }

@@ -6,8 +6,5 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-
     ResponseEntity<List<Product>> findAll();
-
-
 }

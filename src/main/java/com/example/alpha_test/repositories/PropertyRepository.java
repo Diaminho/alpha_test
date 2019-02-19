@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends CrudRepository<Property, Long> {
     List<Property> findAll();
+    Property getById(Long id);
 }

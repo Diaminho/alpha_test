@@ -1,18 +1,12 @@
 package com.example.alpha_test.services.implementations;
 
-import com.example.alpha_test.entities.BrandName;
-import com.example.alpha_test.entities.Product;
-import com.example.alpha_test.entities.Type;
-import com.example.alpha_test.repositories.BrandNameRepository;
-import com.example.alpha_test.repositories.ProductRepository;
-import com.example.alpha_test.repositories.PropertyRepository;
-import com.example.alpha_test.repositories.TypeRepository;
+import com.example.alpha_test.entities.*;
+import com.example.alpha_test.repositories.*;
 import com.example.alpha_test.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -28,6 +22,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     TypeRepository typeRepository;
 
+    @Autowired
+    ProductToPropertyRepository productToPropertyRepository;
+
+    @Autowired
+    PropertyRepository propertyRepository;
+
     //default constructor
     public ProductServiceImpl() { }
 
@@ -36,8 +36,8 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
-    //adding or changing product from productRepository
-    public ResponseEntity<Product> addOrChangeProduct(Long id,
+    //changing product from productRepository
+    public ResponseEntity<Product> putProduct(Long id,
                                          String model,
                                          Long brandId,
                                          Long typeId,
@@ -128,6 +128,25 @@ public class ProductServiceImpl implements ProductService {
         Type type=typeRepository.getById(id);
         if (product!=null && type!=null && newTypeId!=null) {
             product.setProductType(type);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //editing property value with id=id
+    public ResponseEntity<Product> editPropertyIdAndValue(Long id, Long productToPropertyId, Long propertyId, String newValue){
+        if (id==null || newValue==null || propertyId==null){
+            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+        }
+        Product product=productRepository.getById(id);
+        Property property=propertyRepository.getById(propertyId);
+        ProductToProperty productToProperty=productToPropertyRepository.getById(productToPropertyId);
+        if (productToProperty!=null && property!=null && product!=null) {
+            productToProperty.setPropertyValue(newValue);
+            productToProperty.setProperty(property);
+            productToPropertyRepository.save(productToProperty);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         else {

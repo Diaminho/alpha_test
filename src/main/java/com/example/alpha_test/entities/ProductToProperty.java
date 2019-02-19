@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="product_property")
@@ -26,6 +27,7 @@ public class ProductToProperty {
     @Column(name="value")
     private String propertyValue;
 
+    //default constructor
     public ProductToProperty() { }
 
     public Product getProduct() {
@@ -58,5 +60,16 @@ public class ProductToProperty {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductToProperty that = (ProductToProperty) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(product, that.product) &&
+                Objects.equals(property, that.property) &&
+                Objects.equals(propertyValue, that.propertyValue);
     }
 }

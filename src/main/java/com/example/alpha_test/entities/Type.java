@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,6 +23,14 @@ public class Type {
     @JsonIgnore
     private Set<Product> products=new HashSet<>();
 
+    //default constructor
+    public Type(){}
+
+    public Type(String name, Set<Product> products) {
+        this.name = name;
+        this.products = products;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,11 +47,18 @@ public class Type {
         this.id = id;
     }
 
-    public Type(String name, Set<Product> products) {
-        this.name = name;
-        this.products = products;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Type type = (Type) o;
+        return Objects.equals(id, type.id) &&
+                Objects.equals(name, type.name) &&
+                Objects.equals(products, type.products);
     }
 
-    public Type(){}
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, products);
+    }
 }

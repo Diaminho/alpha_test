@@ -21,6 +21,14 @@ public class BrandName {
     @JsonIgnore
     private Set<Product> products=new HashSet<>();
 
+    //default constructor
+    public BrandName(){}
+
+    public BrandName(Long id, String name) {
+        this.name = name;
+        this.id=id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,13 +52,6 @@ public class BrandName {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-
-    public BrandName(Long id, String name) {
-        this.name = name;
-        this.id=id;
-    }
-
-    public BrandName(){}
 
     @Override
     public boolean equals(Object o) {
