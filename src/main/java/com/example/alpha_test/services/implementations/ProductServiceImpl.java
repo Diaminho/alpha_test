@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<Product> getProductById( Long id) {
         Product product=productRepository.getById(id);
         if (product!=null) {
-            return new ResponseEntity<>(productRepository.getById(id), HttpStatus.OK);
+            return new ResponseEntity<>(product, HttpStatus.OK);
         }
         else
         {

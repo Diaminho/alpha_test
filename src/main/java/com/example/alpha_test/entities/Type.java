@@ -26,9 +26,9 @@ public class Type {
     //default constructor
     public Type(){}
 
-    public Type(String name, Set<Product> products) {
+    public Type(Long id,String name) {
         this.name = name;
-        this.products = products;
+        this.id = id;
     }
 
     public String getName() {
@@ -53,8 +53,7 @@ public class Type {
         if (o == null || getClass() != o.getClass()) return false;
         Type type = (Type) o;
         return Objects.equals(id, type.id) &&
-                Objects.equals(name, type.name) &&
-                Objects.equals(products, type.products);
+                name.compareTo(type.name)==0;
     }
 
     @Override

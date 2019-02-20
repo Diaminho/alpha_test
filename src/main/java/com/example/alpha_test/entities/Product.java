@@ -113,11 +113,12 @@ public class Product {
         Product product = (Product) o;
         return Double.compare(product.price, price) == 0 &&
                 Objects.equals(id, product.id) &&
-                Objects.equals(model, product.model) &&
-                Objects.equals(productType, product.productType) &&
-                Objects.equals(brandName, product.brandName) &&
-                Objects.equals(quantity, product.quantity) &&
+                model.compareTo(product.model)==0 &&
+                productType.equals(product.productType) &&
+                brandName.equals(product.brandName) &&
+                Objects.equals(quantity, product.quantity); /* &&
                 Objects.equals(productToProperties, product.productToProperties);
+                */
     }
 
 }

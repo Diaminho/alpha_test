@@ -68,8 +68,8 @@ public class ProductToProperty {
         if (o == null || getClass() != o.getClass()) return false;
         ProductToProperty that = (ProductToProperty) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(product, that.product) &&
-                Objects.equals(property, that.property) &&
-                Objects.equals(propertyValue, that.propertyValue);
+                product.equals(that.product) &&
+                property.equals(that.property) &&
+                propertyValue.compareTo(that.propertyValue)==0;
     }
 }

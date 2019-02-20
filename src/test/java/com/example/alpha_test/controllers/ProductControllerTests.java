@@ -1,8 +1,7 @@
-package com.example.alpha_test;
+package com.example.alpha_test.controllers;
 
 import com.example.alpha_test.entities.*;
 import com.example.alpha_test.controllers.ProductController;
-import com.example.alpha_test.repositories.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
-public class AlphaTestApplicationTests {
+public class ProductControllerTests {
 
-    @Autowired
+    /*@Autowired
     private MockMvc mockMvc;
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -57,7 +56,7 @@ public class AlphaTestApplicationTests {
     @MockBean
     private TypeRepository typeRepository;
 
-    //Beans
+    //entities
     Product product=new Product();
     Type type=new Type();
     ProductToProperty productToProperty=new ProductToProperty();
@@ -81,7 +80,7 @@ public class AlphaTestApplicationTests {
         product.setBrandName(brand);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-       mockMvc.perform(get("/products/1").contentType(contentType))
+        mockMvc.perform(get("/products/1").contentType(contentType))
                 .andExpect(status().isOk()).
                 andExpect(content().json("{\"id\":1,\"model\":\"TEST MODEL\",\"productType\":{\"id\":1,\"name\":\"type1\"},\"brandName\":{\"id\":1,\"name\":\"brand1\"},\"quantity\":20,\"price\":25.0,\"productToProperties\":[]}"));
 
@@ -111,7 +110,7 @@ public class AlphaTestApplicationTests {
     }
 
     @Test
-    public void addProduct() throws Exception {
+    public void addProductWithCorrectId() throws Exception {
         type.setName("type1");
         type.setId(1L);
 
@@ -150,9 +149,47 @@ public class AlphaTestApplicationTests {
         System.out.println("TEST addProductWithWrongBrandId PASSED");
     }
 
+    @Test
+    public void deleteProductWithWrongId() throws Exception {
+        type.setName("type1");
+        type.setId(1L);
+
+        brand.setId(1L);
+        brand.setName("brand1");
+
+        product.setId(1L);
+        product.setQuantity(20L);
+        product.setPrice(25.0);
+        product.setProductType(type);
+        product.setModel("TEST MODEL");
+        product.setBrandName(brand);
+
+        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+
+        when(brandNameRepository.findById(1L)).thenReturn(Optional.of(brand));
+        when(typeRepository.findById(1L)).thenReturn(Optional.of(type));
+        MvcResult result= mockMvc.perform(delete("/products/2")).andReturn();
+
+        assertEquals("Wrong HTTP Status",HttpStatus.NOT_FOUND.value(),result.getResponse().getStatus());
+
+        System.out.println("TEST deleteProductWithWrongId PASSED");
+
+    }
+    */
+
+
+    /*@Autowired
+    private MockMvc mockMvc;
+
+    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype(),
+            Charset.forName("utf8"));
+
+
+
 
     @Test
-    public void deleteProduct() throws Exception {
+    public void deleteProductWithExistingId() throws Exception {
         type.setName("type1");
         type.setId(1L);
 
@@ -180,32 +217,8 @@ public class AlphaTestApplicationTests {
 
     }
 
-    @Test
-    public void deleteProductWithWrongId() throws Exception {
-        type.setName("type1");
-        type.setId(1L);
 
-        brand.setId(1L);
-        brand.setName("brand1");
-
-        product.setId(1L);
-        product.setQuantity(20L);
-        product.setPrice(25.0);
-        product.setProductType(type);
-        product.setModel("TEST MODEL");
-        product.setBrandName(brand);
-
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-
-        when(brandNameRepository.findById(1L)).thenReturn(Optional.of(brand));
-        when(typeRepository.findById(1L)).thenReturn(Optional.of(type));
-        MvcResult result= mockMvc.perform(delete("/products/2")).andReturn();
-
-        assertEquals("Wrong HTTP Status",HttpStatus.NOT_FOUND.value(),result.getResponse().getStatus());
-
-        System.out.println("TEST deleteProductWithWrongId PASSED");
-
-    }
+    */
 
 }
 

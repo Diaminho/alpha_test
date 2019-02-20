@@ -1,6 +1,6 @@
-INSERT INTO TYPE(id,name) VALUES (1, 'Телевизор'); 
-INSERT INTO TYPE(id,name) VALUES(2, 'Холодильник');
-INSERT INTO TYPE(id,name) VALUES(3, 'Стиральная машина');
+INSERT INTO Type(id,name) VALUES (1, 'Телевизор'); 
+INSERT INTO Type(id,name) VALUES(2, 'Холодильник');
+INSERT INTO Type(id,name) VALUES(3, 'Стиральная машина');
 
 INSERT INTO Brand(id, name) VALUES(1,'Samsung');
 INSERT INTO Brand(id, name) VALUES(2,'Toshiba');

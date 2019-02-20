@@ -15,8 +15,10 @@ public class Property {
     @Column(name="id")
     private Long id;
 
-    @Column(name="type_id")
-    private Long type_id;
+    @ManyToOne(targetEntity = Type.class)
+    @JoinColumn(name="type_id")
+    @JsonIgnoreProperties("products")
+    private Type type;
 
     @Column(name="name")
     private String name;
@@ -36,12 +38,12 @@ public class Property {
         this.id = id;
     }
 
-    public Long getType_id() {
-        return type_id;
+    public Type getType() {
+        return type;
     }
 
-    public void setType_id(Long type_id) {
-        this.type_id = type_id;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -66,14 +68,14 @@ public class Property {
         if (o == null || getClass() != o.getClass()) return false;
         Property property = (Property) o;
         return Objects.equals(id, property.id) &&
-                Objects.equals(type_id, property.type_id) &&
-                Objects.equals(name, property.name) &&
-                Objects.equals(productToProperties, property.productToProperties);
+                Objects.equals(type, property.type) &&
+                name.compareTo(property.name)==0; //&&
+                //Objects.equals(productToProperties, property.productToProperties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type_id, name, productToProperties);
+        return Objects.hash(id, type, name, productToProperties);
     }
 }
 
