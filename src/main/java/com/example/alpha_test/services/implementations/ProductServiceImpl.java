@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
 
     //editing quantity of product with id=id
     public ResponseEntity<Product> editQuantity(Long id, Long newQuantity){
-        Product product=productRepository.findById(id).orElse(null);
+        Product product=productRepository.getById(id);
         if (product!=null && newQuantity!=null) {
             product.setQuantity(newQuantity);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
@@ -111,9 +111,12 @@ public class ProductServiceImpl implements ProductService {
 
     //editing brand of product with id=id
     public ResponseEntity<Product> editBrandNameId(Long id, Long newBrandNameId){
+        if (newBrandNameId==null) {
+            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+        }
         Product product=productRepository.getById(id);
-        BrandName brand=brandNameRepository.getById(id);
-        if (product!=null && brand!=null && newBrandNameId!=null) {
+        BrandName brand=brandNameRepository.getById(newBrandNameId);
+        if (product != null && brand != null) {
             product.setBrandName(brand);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
@@ -124,9 +127,12 @@ public class ProductServiceImpl implements ProductService {
 
     //editing type of product with id=id
     public ResponseEntity<Product> editTypeId(Long id, Long newTypeId){
+        if (newTypeId==null) {
+            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+        }
         Product product=productRepository.getById(id);
-        Type type=typeRepository.getById(id);
-        if (product!=null && type!=null && newTypeId!=null) {
+        Type type=typeRepository.getById(newTypeId);
+        if (product!=null && type!=null) {
             product.setProductType(type);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }

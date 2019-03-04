@@ -30,6 +30,12 @@ public class ProductToProperty {
     //default constructor
     public ProductToProperty() { }
 
+    public ProductToProperty(Product product, Property property, String propertyValue) {
+        this.product = product;
+        this.property = property;
+        this.propertyValue = propertyValue;
+    }
+
     public Product getProduct() {
         return product;
     }

@@ -30,6 +30,11 @@ public class Property {
     //default constructor
     public Property() { }
 
+    public Property(Type type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
