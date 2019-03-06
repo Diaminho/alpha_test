@@ -47,6 +47,14 @@ public class Type {
         this.id = id;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

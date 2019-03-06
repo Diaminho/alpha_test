@@ -31,6 +31,46 @@ public class ProductServiceImpl implements ProductService {
     //default constructor
     public ProductServiceImpl() { }
 
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public BrandNameRepository getBrandNameRepository() {
+        return brandNameRepository;
+    }
+
+    public void setBrandNameRepository(BrandNameRepository brandNameRepository) {
+        this.brandNameRepository = brandNameRepository;
+    }
+
+    public TypeRepository getTypeRepository() {
+        return typeRepository;
+    }
+
+    public void setTypeRepository(TypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
+    }
+
+    public ProductToPropertyRepository getProductToPropertyRepository() {
+        return productToPropertyRepository;
+    }
+
+    public void setProductToPropertyRepository(ProductToPropertyRepository productToPropertyRepository) {
+        this.productToPropertyRepository = productToPropertyRepository;
+    }
+
+    public PropertyRepository getPropertyRepository() {
+        return propertyRepository;
+    }
+
+    public void setPropertyRepository(PropertyRepository propertyRepository) {
+        this.propertyRepository = propertyRepository;
+    }
+
     //getting all products from  productRepository
     public ResponseEntity<List<Product>> findAll(){
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
@@ -64,9 +104,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //finding product by id
-    public ResponseEntity<Product> getProductById( Long id) {
+    public ResponseEntity<Product> getProductById(Long id) {
         Product product=productRepository.getById(id);
-        if (product!=null) {
+        if (product!=null ) {
             return new ResponseEntity<>(product, HttpStatus.OK);
         }
         else
@@ -142,7 +182,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //editing property value with id=id
-    public ResponseEntity<Product> editPropertyIdAndValue(Long id, Long productToPropertyId, Long propertyId, String newValue){
+    public ResponseEntity<Product> editPropertyIdAndValue(Long id,
+                                                          Long productToPropertyId,
+                                                          Long propertyId,
+                                                          String newValue){
         if (id==null || newValue==null || propertyId==null){
             return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
         }

@@ -1,5 +1,6 @@
 package com.example.alpha_test.entities;
 
+import com.example.alpha_test.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -106,6 +107,10 @@ public class Product {
         this.productToProperties = productToProperties;
     }
 
+    public void addPropductToProperty(ProductToProperty productToProperty){
+        productToProperties.add(productToProperty);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,5 +125,6 @@ public class Product {
                 Objects.equals(productToProperties, product.productToProperties);
                 */
     }
+
 
 }

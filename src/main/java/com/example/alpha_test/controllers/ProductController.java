@@ -1,6 +1,7 @@
 package com.example.alpha_test.controllers;
 
 import com.example.alpha_test.entities.*;
+import com.example.alpha_test.services.ProductService;
 import com.example.alpha_test.services.implementations.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ public class ProductController {
 
     //Service
     @Autowired
-    private ProductServiceImpl productServiceImpl;
+    private ProductService productServiceImpl;
 
     //default constructor
     ProductController() { }

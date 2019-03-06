@@ -1,5 +1,6 @@
 package com.example.alpha_test.controllers;
 
+import com.example.alpha_test.dto.TypeDTO;
 import com.example.alpha_test.entities.Type;
 import com.example.alpha_test.services.implementations.TypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class TypeController {
 
     //getting all types
     @GetMapping("/types")
-    public ResponseEntity<List<Type>> findAll(){
+    public ResponseEntity<List<TypeDTO>> findAll(){
         return typeServiceImpl.findAll();
     }
 }

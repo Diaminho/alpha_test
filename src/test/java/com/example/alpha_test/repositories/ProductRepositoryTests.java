@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

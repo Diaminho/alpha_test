@@ -1,10 +1,10 @@
 package com.example.alpha_test.services;
 
-import com.example.alpha_test.entities.Type;
+import com.example.alpha_test.dto.TypeDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface TypeService {
-    ResponseEntity<List<Type>> findAll();
+    //ResponseEntity<List<TypeDTO>> findAll();
 }

@@ -2,13 +2,19 @@ package com.example.alpha_test.controllers;
 
 import com.example.alpha_test.entities.*;
 import com.example.alpha_test.controllers.ProductController;
+import com.example.alpha_test.repositories.*;
+import com.example.alpha_test.services.ProductService;
+import com.example.alpha_test.services.implementations.ProductServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -32,61 +38,57 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 public class ProductControllerTests {
 
-    /*@Autowired
+    @Autowired
     private MockMvc mockMvc;
 
-    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(),
-            Charset.forName("utf8"));
-
-
-    //REPOS
-    @MockBean
-    private BrandNameRepository brandNameRepository;
+    private MediaType contentType;
 
     @MockBean
-    private ProductRepository productRepository;
-
-    @MockBean
-    private ProductToPropertyRepository productToPropertyRepository;
-
-    @MockBean
-    private PropertyRepository propertyRepository;
-
-    @MockBean
-    private TypeRepository typeRepository;
+    ProductService productService;
 
     //entities
-    Product product=new Product();
-    Type type=new Type();
-    ProductToProperty productToProperty=new ProductToProperty();
-    Property property=new Property();
-    BrandName brand=new BrandName();
+    Type type;
+    BrandName brandName;
+    Product product;
+    Property property;
+    ProductToProperty productToProperty;
+
+
+    @Before
+    public void setUp(){
+        contentType=new MediaType(MediaType.APPLICATION_JSON.getType(),
+                MediaType.APPLICATION_JSON.getSubtype(),
+                Charset.forName("utf8"));
+
+        type=new Type(1L,"Type");
+        brandName=new BrandName(1L,"Brand");
+        product=new Product(1L,"Model",type,brandName,25L,200.0);
+        property = new Property(type, "Property");
+        property.setId(1L);
+        productToProperty = new ProductToProperty(product, property, "100");
+        productToProperty.setId(1L);
+        product.addPropductToProperty(productToProperty);
+
+    }
 
 
     @Test
-    public void getProductById() throws Exception {
-        type.setName("type1");
-        type.setId(1L);
-
-        brand.setId(1L);
-        brand.setName("brand1");
-
-        product.setId(1L);
-        product.setQuantity(20L);
-        product.setPrice(25.0);
-        product.setProductType(type);
-        product.setModel("TEST MODEL");
-        product.setBrandName(brand);
-
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+    public void shouldGetProductAndReturnOk() throws Exception {
+        when(productService.getProductById(1L)).thenReturn(new ResponseEntity<>(product,HttpStatus.OK));
         mockMvc.perform(get("/products/1").contentType(contentType))
                 .andExpect(status().isOk()).
-                andExpect(content().json("{\"id\":1,\"model\":\"TEST MODEL\",\"productType\":{\"id\":1,\"name\":\"type1\"},\"brandName\":{\"id\":1,\"name\":\"brand1\"},\"quantity\":20,\"price\":25.0,\"productToProperties\":[]}"));
-
-        System.out.println("TEST getProductById PASSED");
+                andExpect(content().json("{\"id\":1,\"model\":\"Model\",\"productType\":{\"id\":1,\"name\":\"Type\"},\"brandName\":{\"id\":1,\"name\":\"Brand\"},\"quantity\":25,\"price\":200.0,\"productToProperties\":[{\"id\":1,\"property\":{\"id\":1,\"type\":{\"id\":1,\"name\":\"Type\"},\"name\":\"Property\"},\"propertyValue\":\"100\"}]}"));
     }
 
+    //get product by wrong id
+    @Test
+    public void shouldNotGetProductAndReturnNotFound() throws Exception {
+        when(productService.getProductById(1L)).thenReturn(new ResponseEntity<>(product, HttpStatus.OK));
+        mockMvc.perform(get("/products/2").contentType(contentType))
+                .andExpect(status().isNotFound());
+        verify(productService).getProductById(2L);
+    }
+/*
     @Test
     public void getProductByWrongId() throws Exception {
         type.setName("type1");
