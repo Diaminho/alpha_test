@@ -7,7 +7,7 @@ public class TypeDTO {
 
     private Long id;
     private String name;
-    private Set<ProductDTO> products=new HashSet<>();
+    //private Set<ProductDTO> products=new HashSet<>();
 
     public TypeDTO(Long id, String name) {
         this.id = id;
@@ -30,11 +30,11 @@ public class TypeDTO {
         this.name = name;
     }
 
-    public Set<ProductDTO> getProducts() {
+    /*public Set<ProductDTO> getProducts() {
         return products;
-    }
+    }*/
 
-    public void setProducts(Set<ProductDTO> products) {
+    /*public void setProducts(Set<ProductDTO> products) {
         this.products = products;
-    }
+    }*/
 }

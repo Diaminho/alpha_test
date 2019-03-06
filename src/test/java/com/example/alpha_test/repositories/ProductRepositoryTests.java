@@ -1,8 +1,11 @@
 package com.example.alpha_test.repositories;
 
-import com.example.alpha_test.entities.BrandName;
-import com.example.alpha_test.entities.Product;
-import com.example.alpha_test.entities.Type;
+import com.example.alpha_test.entity.BrandName;
+import com.example.alpha_test.entity.Product;
+import com.example.alpha_test.entity.Type;
+import com.example.alpha_test.repository.BrandNameRepository;
+import com.example.alpha_test.repository.ProductRepository;
+import com.example.alpha_test.repository.TypeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

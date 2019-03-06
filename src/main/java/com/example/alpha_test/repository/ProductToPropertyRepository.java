@@ -1,0 +1,13 @@
+package com.example.alpha_test.repository;
+
+import com.example.alpha_test.entity.ProductToProperty;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ProductToPropertyRepository extends CrudRepository<ProductToProperty, Long> {
+    List<ProductToProperty> findAll();
+    ProductToProperty getById(Long id);
+}
