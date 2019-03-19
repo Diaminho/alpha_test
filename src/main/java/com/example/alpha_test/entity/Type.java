@@ -12,7 +12,6 @@ import java.util.Set;
 @Table(name="type")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Type {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")

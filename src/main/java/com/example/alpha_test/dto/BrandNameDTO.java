@@ -1,12 +1,8 @@
 package com.example.alpha_test.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class BrandNameDTO {
     private Long id;
     private String name;
-    //private Set<ProductDTO> products=new HashSet<>();
 
     public BrandNameDTO(Long id, String name) {
         this.id = id;
@@ -28,12 +24,4 @@ public class BrandNameDTO {
     public void setName(String name) {
         this.name = name;
     }
-
-    /*public Set<ProductDTO> getProducts() {
-        return products;
-    }*/
-
-    /*public void setProducts(Set<ProductDTO> products) {
-        this.products = products;
-    }*/
 }

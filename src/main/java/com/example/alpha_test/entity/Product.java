@@ -12,7 +12,6 @@ import java.util.Set;
 @Table(name="product")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
-
     @Id
     @Column(name="id")
     private Long id;
@@ -121,10 +120,6 @@ public class Product {
                 model.compareTo(product.model)==0 &&
                 productType.equals(product.productType) &&
                 brandName.equals(product.brandName) &&
-                Objects.equals(quantity, product.quantity); /* &&
-                Objects.equals(productToProperties, product.productToProperties);
-                */
+                Objects.equals(quantity, product.quantity);
     }
-
-
 }

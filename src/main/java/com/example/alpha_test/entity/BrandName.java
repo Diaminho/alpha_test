@@ -61,9 +61,7 @@ public class BrandName {
         if (o == null || getClass() != o.getClass()) return false;
         BrandName brandName = (BrandName) o;
         return Objects.equals(id, brandName.id) &&
-                name.compareTo(brandName.name)==0;/* &&
-                Objects.equals(products, brandName.products);
-                */
+                name.compareTo(brandName.name)==0;
     }
 
     @Override

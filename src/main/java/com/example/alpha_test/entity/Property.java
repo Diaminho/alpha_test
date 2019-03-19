@@ -75,8 +75,7 @@ public class Property {
         Property property = (Property) o;
         return Objects.equals(id, property.id) &&
                 Objects.equals(type, property.type) &&
-                name.compareTo(property.name)==0; //&&
-                //Objects.equals(productToProperties, property.productToProperties);
+                name.compareTo(property.name)==0;
     }
 
     @Override
@@ -84,5 +83,3 @@ public class Property {
         return Objects.hash(id, type, name, productToProperties);
     }
 }
-
-

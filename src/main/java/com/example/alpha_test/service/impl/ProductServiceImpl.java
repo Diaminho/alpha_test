@@ -6,8 +6,6 @@ import com.example.alpha_test.entity.*;
 import com.example.alpha_test.repository.*;
 import com.example.alpha_test.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,18 +76,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //getting all products from  productRepository
-    public ResponseEntity<List<ProductDTO>> findAll(){
+    public List<ProductDTO> findAll(){
         List<Product> productList=productRepository.findAll();
 
         List<ProductDTO> productDTOList=new ArrayList<>();
         for(Object product: productList){
             productDTOList.add(entityToDTOConverter.productToDTO((Product) product));
         }
-        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+        return productDTOList;
     }
 
     //changing or adding product
-    public ResponseEntity<Product> putProduct(Long id,
+    public ProductDTO putProduct(Long id,
                                          String model,
                                          Long brandId,
                                          Long typeId,
@@ -98,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     {
         //checks if null parameters are presented in input data
         if (id==null || model==null || brandId==null || quantity==null || price==null){
-            return new ResponseEntity<>((Product) null, HttpStatus.NOT_FOUND);
+            return null;
         }
 
         //find brand and type by id
@@ -108,98 +106,109 @@ public class ProductServiceImpl implements ProductService {
         //check if data were found
         if (brand!=null && type!=null) {
             Product product = new Product(id, model, type, brand, quantity, price);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null, HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //finding product by id
-    public ResponseEntity<Product> getProductById(Long id) {
+    public ProductDTO getProductById(Long id) {
         Product product=productRepository.getById(id);
         if (product!=null ) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else
         {
-            return new ResponseEntity<>((Product)null, HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //deleting product by id
-    public ResponseEntity<Void> deleteProductById(Long id) {
+    public Integer  deleteProductById(Long id) {
         if (productRepository.getById(id)!=null) {
             productRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            return 0;
         }
         else
-            return ResponseEntity.notFound().build();
+            return 1;
     }
 
     //editing price of product with id=id
-    public ResponseEntity<Product> editPrice(Long id, Double newPrice){
+    public ProductDTO editPrice(Long id, Double newPrice){
         Product product=productRepository.getById(id);
         if (product!=null && newPrice!=null) {
             product.setPrice(newPrice);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //editing quantity of product with id=id
-    public ResponseEntity<Product> editQuantity(Long id, Long newQuantity){
+    public ProductDTO editQuantity(Long id, Long newQuantity){
         Product product=productRepository.getById(id);
         if (product!=null && newQuantity!=null) {
             product.setQuantity(newQuantity);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //editing brand of product with id=id
-    public ResponseEntity<Product> editBrandNameId(Long id, Long newBrandNameId){
+    public ProductDTO editBrandNameId(Long id, Long newBrandNameId){
         if (newBrandNameId==null) {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
         Product product=productRepository.getById(id);
         BrandName brand=brandNameRepository.getById(newBrandNameId);
         if (product != null && brand != null) {
             product.setBrandName(brand);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //editing type of product with id=id
-    public ResponseEntity<Product> editTypeId(Long id, Long newTypeId){
+    public ProductDTO editTypeId(Long id, Long newTypeId){
         if (newTypeId==null) {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
         Product product=productRepository.getById(id);
         Type type=typeRepository.getById(newTypeId);
         if (product!=null && type!=null) {
             product.setProductType(type);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 
     //editing property value with id=id
-    public ResponseEntity<Product> editPropertyIdAndValue(Long id,
+    public ProductDTO editPropertyIdAndValue(Long id,
                                                           Long productToPropertyId,
                                                           Long propertyId,
                                                           String newValue){
         if (id==null || newValue==null || propertyId==null){
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
         Product product=productRepository.getById(id);
         Property property=propertyRepository.getById(propertyId);
@@ -208,10 +217,12 @@ public class ProductServiceImpl implements ProductService {
             productToProperty.setPropertyValue(newValue);
             productToProperty.setProperty(property);
             productToPropertyRepository.save(productToProperty);
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            productRepository.save(product);
+            ProductDTO productDTO=entityToDTOConverter.productToDTO(product);
+            return productDTO;
         }
         else {
-            return new ResponseEntity<>((Product)null,HttpStatus.NOT_FOUND);
+            return null;
         }
     }
 }

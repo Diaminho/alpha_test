@@ -1,10 +1,9 @@
 package com.example.alpha_test.service;
 
-import com.example.alpha_test.entity.Property;
-import org.springframework.http.ResponseEntity;
+import com.example.alpha_test.dto.PropertyDTO;
 
 import java.util.List;
 
 public interface PropertyService {
-    ResponseEntity<List<Property>> findAll();
+    List<PropertyDTO> findAll();
 }

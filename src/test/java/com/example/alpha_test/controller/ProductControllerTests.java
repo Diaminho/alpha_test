@@ -1,6 +1,7 @@
 package com.example.alpha_test.controller;
 
 import com.example.alpha_test.entity.*;
+import com.example.alpha_test.repository.ProductRepository;
 import com.example.alpha_test.service.ProductService;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,18 +63,24 @@ public class ProductControllerTests {
         productToProperty = new ProductToProperty(product, property, "100");
         productToProperty.setId(1L);
         product.addPropductToProperty(productToProperty);
-
+        //
+        productService.putProduct(product.getId(),
+                product.getModel(),
+                brandName.getId(),
+                type.getId(),
+                product.getQuantity(),
+                product.getPrice());
     }
 
 
     @Test
     public void shouldGetProductAndReturnOk() throws Exception {
-        when(productService.getProductById(1L)).thenReturn(new ResponseEntity<>(product,HttpStatus.OK));
+        //when(productService.getProductById(1L)).thenReturn(new ResponseEntity<>(product,HttpStatus.OK));
         mockMvc.perform(get("/products/1").contentType(contentType))
                 .andExpect(status().isOk()).
                 andExpect(content().json("{\"id\":1,\"model\":\"Model\",\"productType\":{\"id\":1,\"name\":\"Type\"},\"brandName\":{\"id\":1,\"name\":\"Brand\"},\"quantity\":25,\"price\":200.0,\"productToProperties\":[{\"id\":1,\"property\":{\"id\":1,\"type\":{\"id\":1,\"name\":\"Type\"},\"name\":\"Property\"},\"propertyValue\":\"100\"}]}"));
     }
-
+/*
     //get product by wrong id
     @Test
     public void shouldNotGetProductAndReturnNotFound() throws Exception {
